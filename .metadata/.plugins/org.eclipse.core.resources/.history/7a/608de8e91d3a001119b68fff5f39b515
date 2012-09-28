@@ -1,0 +1,85 @@
+package org.llistaCompra.adapter;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.llistaCompra.helper.LlistaCompraHelper;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+public class LlistaCompraDbAdapter {
+	private static final String LLISTA_TABLE = "Llista";
+	public static final String LLISTA_NOM = "nom";
+	public static final String LLISTA_DATA = "data";
+	public static final String LLISTA_DATACOMPRA = "dataCompra";
+	public static final String LLISTA_ROWID = "_id";
+
+	private final Context mCtx;
+
+	private static final String TAG = "LlistaCompraDbAdapter";
+	private LlistaCompraHelper mDbHelper;
+	private SQLiteDatabase mDb;
+
+	public LlistaCompraDbAdapter(Context ctx) {
+		this.mCtx = ctx;
+	}
+
+	public LlistaCompraDbAdapter open() throws SQLException {
+		mDbHelper = new LlistaCompraHelper(mCtx);
+		mDb = mDbHelper.getWritableDatabase();
+		return this;
+	}
+
+	public void close() {
+		mDbHelper.close();
+	}
+
+	public long createLlista(String nomLlista) {
+		ContentValues initialValues = new ContentValues();
+        initialValues.put(LLISTA_NOM, nomLlista);
+        //TODO afegir la data de creació
+        return mDb.insert(LLISTA_TABLE, null, initialValues);
+
+	}
+
+	public boolean deleteLlista(long rowId) {
+		return mDb.delete(LLISTA_TABLE, LLISTA_ROWID + "=" + rowId, null) > 0;
+	}
+
+	public Cursor fetchAllLlista() {
+		return mDb.query(LLISTA_TABLE,
+				new String[] { LLISTA_ROWID, LLISTA_NOM }, null, null, null,
+				null, null);
+	}
+	
+
+	public Cursor fetchLlista(long rowId) throws SQLException {
+		 Cursor mCursor =
+
+	            mDb.query(true, LLISTA_TABLE, new String[] {LLISTA_ROWID,
+	            		LLISTA_NOM}, LLISTA_ROWID + "=" + rowId, null,
+	                    null, null, null, null);
+	        if (mCursor != null) {
+	            mCursor.moveToFirst();
+	        }
+	        return mCursor;
+	}
+
+
+	public boolean updateLlista(long rowId, String nomLlista, Date dataCompra ) {
+		ContentValues args = new ContentValues();
+        args.put(LLISTA_NOM, nomLlista);
+        DateFormat  formatter = new SimpleDateFormat("yyyyMMdd");
+     
+        String s = formatter.format(dataCompra);
+        args.put(LLISTA_DATACOMPRA, s);
+        return mDb.update(LLISTA_TABLE, args, LLISTA_ROWID + "=" + rowId, null) > 0;
+	}
+
+
+}

@@ -1,0 +1,17 @@
+package org.llistaCompra.adapter;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+public class llistaCompraDbAdapter {
+	private final Context mCtx;
+	
+	private DatabaseHelper mDbHelper;
+    private SQLiteDatabase mDb;
+	
+	public llistaCompraDbAdapter(Context ctx) {
+        this.mCtx = ctx;
+    }
+	
+	
+}

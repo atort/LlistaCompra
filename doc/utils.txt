@@ -1,0 +1,9 @@
+Imatges de botons de títol.
+	Imatge inicial mida 131x58
+	Tipus de lletra: Terminal, 30, centrada
+	Botó <==| (tipus back) Quadre de text: Inici a 13,11. Mida 115x34  
+	Botó |==| (quadrat) Quadre de text: Inici a 13,11. Mida 103x34
+	
+	hdpi h=30
+	mdpi h=30
+	ldpi h=30

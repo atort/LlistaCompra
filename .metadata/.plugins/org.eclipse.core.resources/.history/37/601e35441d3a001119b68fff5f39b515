@@ -1,0 +1,95 @@
+package org.llistaCompra.activity;
+
+import org.llistaCompra.R;
+import org.llistaCompra.adapter.LlistaCompraDbAdapter;
+
+import android.app.Activity;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class LlistaCompraEdit extends Activity {
+	private EditText mLlistaText;
+	private Long mRowId;
+	private LlistaCompraDbAdapter llistaCompraDbAdapter;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		llistaCompraDbAdapter = new LlistaCompraDbAdapter(this);
+		llistaCompraDbAdapter.open();
+
+		setContentView(R.layout.llista_compra_llista_edit);
+		setTitle(R.string.edit_list);
+
+		mLlistaText = (EditText) findViewById(R.id.nomLlista);
+
+		Button confirmButton = (Button) findViewById(R.id.confirm);
+
+		mRowId = (savedInstanceState == null) ? null
+				: (Long) savedInstanceState
+						.getSerializable(LlistaCompraDbAdapter.LLISTA_ROWID);
+		if (mRowId == null) {
+			Bundle extras = getIntent().getExtras();
+			mRowId = extras != null ? extras
+					.getLong(LlistaCompraDbAdapter.LLISTA_ROWID) : null;
+		}
+
+		populateFields();
+
+		confirmButton.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View view) {
+				setResult(RESULT_OK);
+				finish();
+			}
+
+		});
+	}
+
+	private void populateFields() {
+		if (mRowId != null) {
+			Cursor note = llistaCompraDbAdapter.fetchLlista(mRowId);
+			startManagingCursor(note);
+			mLlistaText.setText(note.getString(note
+					.getColumnIndexOrThrow(LlistaCompraDbAdapter.LLISTA_NOM)));
+
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		//TODO Guardar en estat i no en base de dades
+		saveState();
+		outState.putSerializable(LlistaCompraDbAdapter.LLISTA_ROWID, mRowId);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		//saveState();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		populateFields();
+	}
+
+	private void saveState() {
+		String listName = mLlistaText.getText().toString();
+
+		if (mRowId == null) {
+			long id = llistaCompraDbAdapter.createLlista(listName);
+			if (id > 0) {
+				mRowId = id;
+			}
+		} else {
+			// TODO
+			llistaCompraDbAdapter.updateLlista(mRowId, listName, null, null);
+		}
+	}
+}

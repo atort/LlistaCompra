@@ -1,0 +1,57 @@
+package org.llistaCompra.activity;
+
+import org.llistaCompra.adapter.LlistaCompraDbAdapter;
+
+import android.app.Activity;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.widget.EditText;
+
+public class LlistaCompraEdit extends Activity {
+	 private EditText mLlistaText;
+     private Long mRowId;
+     private static LlistaCompraDbAdapter llistaCompraDbAdapter;
+	
+     
+     private void populateFields() {
+         if (mRowId != null) {
+             Cursor note = llistaCompraDbAdapter.fetchLlista(mRowId);
+             startManagingCursor(note);
+             mLlistaText.setText(note.getString(
+                     note.getColumnIndexOrThrow(llistaCompraDbAdapter.LLISTA_NOM)));
+            
+         }
+     }
+
+     @Override
+     protected void onSaveInstanceState(Bundle outState) {
+         super.onSaveInstanceState(outState);
+         saveState();
+         outState.putSerializable(llistaCompraDbAdapter.LLISTA_ROWID, mRowId);
+     } 
+     
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateFields();
+    }
+    
+    private void saveState() {
+        String listName = mLlistaText.getText().toString();
+
+        if (mRowId == null) {
+            long id = llistaCompraDbAdapter.createLlista(listName);
+            if (id > 0) {
+                mRowId = id;
+            }
+        } else {
+        	llistaCompraDbAdapter.updateLlista();
+        }
+    }
+}

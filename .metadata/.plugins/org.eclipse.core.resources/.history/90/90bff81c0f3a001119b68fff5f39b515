@@ -1,0 +1,14 @@
+package org.llistaCompra.activity;
+
+import org.llistaCompra.adapter.LlistaCompraDbAdapter;
+
+import android.app.ListActivity;
+import android.view.Menu;
+
+public class LlistaCompraProductList extends ListActivity{
+	public static final int ADDPRODUCT_ID = Menu.FIRST;
+	public static final int BEGINBUY_ID = Menu.FIRST+1;
+
+	private LlistaCompraDbAdapter llistaCompraDbAdapter;
+	
+}

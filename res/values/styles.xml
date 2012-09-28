@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextList" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">10px</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    
+    <style name="TextListWithoutSpace" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">1px</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <!-- <style name="WindowTitleBackground" parent="android:WindowTitleBackground">
+        <item name="android:background">@android:color/transparent</item>
+    </style>-->
+    
+
+</resources>

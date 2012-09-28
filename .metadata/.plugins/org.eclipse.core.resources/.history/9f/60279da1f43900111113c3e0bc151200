@@ -1,0 +1,10 @@
+package org.llistaCompra.to;
+
+import java.util.Date;
+
+public class Llista {
+	public int id;
+	public String nomLlista;
+	public Date dataLlista;
+	public Date dataCompra;
+}

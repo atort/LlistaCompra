@@ -1,0 +1,5 @@
+package org.llistaCompra.activity;
+
+public class LlistaCompraEdit  extends Activity {
+
+}

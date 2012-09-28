@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+D:\dev\LlistaCompra\.metadata\.plugins\org.eclipse.jdt.core
+320271251.index
+978037629.index

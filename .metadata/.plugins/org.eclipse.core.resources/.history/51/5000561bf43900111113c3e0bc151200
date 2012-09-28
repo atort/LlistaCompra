@@ -1,0 +1,20 @@
+package org.llistaCompra.adapter;
+
+import org.llistaCompra.helper.LlistaCompraHelper;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+public class llistaCompraDbAdapter {
+	private final Context mCtx;
+	
+	private static final String TAG = "llistaCompraDbAdapter";
+	private LlistaCompraHelper mDbHelper;
+    private SQLiteDatabase mDb;
+	
+	public llistaCompraDbAdapter(Context ctx) {
+        this.mCtx = ctx;
+    }
+	
+	
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+	<target name="javadoc">
+		<javadoc access="public" additionalparam="-linkoffline http://d.android.com/reference &quot;file:/C:/Archivos de programa/Android/android-sdk/docs/reference&quot; -classpath &quot;C:\Archivos de programa\Android\android-sdk\platforms\android-8/android.jar&quot; " author="true" classpath="." destdir="javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.llistaCompra.activity.helper,org.llistaCompra.activity,org.llistaCompra.helper,org.llistaCompra.adapter,org.llistaCompra.activity.cursor,org.llistaCompra.to" source="1.5" sourcepath="src;gen" splitindex="true" use="true" version="true" />
+	</target>
+</project>

@@ -1,0 +1,25 @@
+package org.llistaCompra.activity;
+
+import org.llistaCompra.R;
+import org.llistaCompra.adapter.LlistaCompraDbAdapter;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class LlistaCompraList extends Activity {
+	
+	private LlistaCompraDbAdapter mDbHelper;
+	
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.llista_compra_llista_list);
+        mDbHelper = new NotesDbAdapter(this);
+        mDbHelper.open();
+        fillData();
+    }
+    
+    
+    
+}

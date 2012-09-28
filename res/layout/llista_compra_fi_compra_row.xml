@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableRow1"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="5px"
+        android:src="@drawable/blau" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/text1"
+        style="@+style/TextList"
+        android:layout_toRightOf="@+id/icon" >
+    </TextView>
+
+     <TextView style="@+style/TextList"
+        android:id="@+id/text2" 
+        android:text="(" 
+        android:layout_toRightOf="@+id/text1" />
+     
+    <TextView
+        android:id="@+id/textQuantitat"
+        style="@+style/TextListWithoutSpace" 
+        android:layout_toRightOf="@+id/text2" />
+    
+    <TextView style="@+style/TextListWithoutSpace"
+        android:text=")" 
+        android:layout_toRightOf="@+id/textQuantitat" 
+        android:layout_toLeftOf="@+id/price"/>
+    
+    <TextView
+        android:id="@+id/price"
+        style="@+style/TextList"
+        android:layout_toLeftOf="@+id/result"
+        android:gravity="right"
+        android:paddingRight="10px"
+        android:textColor="#FF6666" >
+    </TextView>
+
+    
+    <ImageView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ko" />
+
+</RelativeLayout>

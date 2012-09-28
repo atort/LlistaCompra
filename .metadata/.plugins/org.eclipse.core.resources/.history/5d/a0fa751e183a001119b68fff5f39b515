@@ -1,0 +1,37 @@
+package org.llistaCompra.activity;
+
+import org.llistaCompra.adapter.LlistaCompraDbAdapter;
+
+import android.app.Activity;
+import android.widget.EditText;
+
+public class LlistaCompraEdit extends Activity {
+	 private EditText mLlistaText;
+     private Long mRowId;
+     private LlistaCompraDbAdapter llistaCompraDbAdapter;
+	
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateFields();
+    }
+    
+    private void saveState() {
+        String listName = mLlistaText.getText().toString();
+
+        if (mRowId == null) {
+            long id = llistaCompraDbAdapter.createLlista(listName);
+            if (id > 0) {
+                mRowId = id;
+            }
+        } else {
+        	llistaCompraDbAdapter.updateLlista();
+        }
+    }
+}

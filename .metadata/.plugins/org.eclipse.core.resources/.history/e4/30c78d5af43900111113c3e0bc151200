@@ -1,0 +1,37 @@
+package org.llistaCompra.adapter;
+
+import org.llistaCompra.helper.LlistaCompraHelper;
+
+import android.content.Context;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+public class LlistaCompraDbAdapter {
+	private final Context mCtx;
+	
+	private static final String TAG = "LlistaCompraDbAdapter";
+	private LlistaCompraHelper mDbHelper;
+    private SQLiteDatabase mDb;
+	
+	public LlistaCompraDbAdapter(Context ctx) {
+        this.mCtx = ctx;
+    }
+	
+	public LlistaCompraDbAdapter open() throws SQLException {
+        mDbHelper = new LlistaCompraHelper(mCtx);
+        mDb = mDbHelper.getWritableDatabase();
+        return this;
+    }
+
+    public void close() {
+        mDbHelper.close();
+    }
+    
+    
+    public boolean updateLlista(long rowId, String title, String body) {
+       
+        return true;
+    }
+	
+	
+}

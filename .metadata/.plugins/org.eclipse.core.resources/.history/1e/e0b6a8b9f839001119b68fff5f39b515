@@ -1,0 +1,76 @@
+package org.llistaCompra.adapter;
+
+import org.llistaCompra.helper.LlistaCompraHelper;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+public class LlistaCompraDbAdapter {
+	private static final String LLISTA_TABLE = "Llista";
+	public static final String LLISTA_NOM = "nom";
+    public static final String LLISTA_ROWID = "_id";
+	
+	private final Context mCtx;
+	
+	private static final String TAG = "LlistaCompraDbAdapter";
+	private LlistaCompraHelper mDbHelper;
+    private SQLiteDatabase mDb;
+	
+	public LlistaCompraDbAdapter(Context ctx) {
+        this.mCtx = ctx;
+    }
+	
+	public LlistaCompraDbAdapter open() throws SQLException {
+        mDbHelper = new LlistaCompraHelper(mCtx);
+        mDb = mDbHelper.getWritableDatabase();
+        return this;
+    }
+
+    public void close() {
+        mDbHelper.close();
+    }
+    
+    
+    public long createLlista(String nomLlista) {
+       return 0;
+    }
+    
+    public long createProducte(long idLlista) {
+        return 0;
+     }
+    
+    public boolean deleteLlista(long rowId) {
+        return true;
+    }
+    
+    public boolean deleteProducte(long idLlista, long rowId) {
+        return true;
+    }
+    
+    public Cursor fetchAllLlista() {
+    	return mDb.query(LLISTA_TABLE, new String[] {LLISTA_ROWID, LLISTA_NOM}, null, null, null, null, null);
+    }
+    
+    public Cursor fetchAllProductes(long idLlista) {
+        return null;
+    }
+    
+    public Cursor fetchLlista(long rowId) throws SQLException {
+    	return null;
+    }
+    
+    public Cursor fetchProducte(long idLlista, long rowId) throws SQLException {
+    	return null;
+    }
+    
+    public boolean updateLlista() {
+       return true;
+    }
+	
+    public boolean updateProducteLlista() {
+        return true;
+     }
+	
+}
