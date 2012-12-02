@@ -1,16 +1,24 @@
 package org.llistaCompra.activity;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.llistaCompra.R;
 import org.llistaCompra.activity.cursor.LlistaCursorAdapter;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
+import org.llistaCompra.provider.FileProvider;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -215,13 +223,34 @@ public class LlistaCompraList extends ListActivity {
 	}
 	
 	private void share(String subject,String text) {
+		
+		
 	    final Intent intent = new Intent(Intent.ACTION_SEND);
 
 	    intent.setType("text/plain");
 	    intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 	    intent.putExtra(Intent.EXTRA_TEXT, text);
-
+	    String nameFile;
+		try {
+			nameFile = writeFileList(subject,text);
+			intent.putExtra(Intent.EXTRA_STREAM, 
+		    		Uri.parse(FileProvider.CONTENT_URI +nameFile));
+		} catch (IOException e) {
+			Log.e("ERROR FILE", e.getMessage());
+		}
+	    
 	    startActivity(Intent.createChooser(intent, getString(R.string.share)));
 	}
 
+	public String writeFileList(String nameList, String bodyList)
+			throws IOException {
+		
+		String nameFile = nameList + ".llista.txt";
+		File f = new File(getFilesDir(), nameFile);
+		BufferedWriter out = new BufferedWriter(new FileWriter(f));
+		out.write(bodyList);
+		out.close();
+
+		return nameFile;
+	}
 }

@@ -53,6 +53,11 @@
                 <data android:host="*" />
             </intent-filter>
         </activity>
+        
+        <provider
+			android:name=".provider.FileProvider"
+			android:authorities="org.llistaCompra.files"
+			android:exported="true"/>
     </application>
 
 </manifest>
