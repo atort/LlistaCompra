@@ -30,7 +30,7 @@ public class MainTab extends TabActivity {
 	    LlistaCompraFormatHelper.loadLocale(this);
 	    		
 	    LlistaCompraFormatHelper.createTitle(this,
-				R.layout.main, (String)getText(R.string.app_name), false);
+				R.layout.main, (String)getText(R.string.app_name), false, true, false);
 	    
 	    //setContentView(R.layout.main);
 

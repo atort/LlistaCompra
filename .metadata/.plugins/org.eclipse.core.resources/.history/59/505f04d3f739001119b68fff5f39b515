@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="hello">Hello World, LlistaCompraList!</string>
-    <string name="app_name">Llista Compra</string>
-	<string name="no_notes">Llista buida</string>
-</resources>

@@ -1,7 +1,0 @@
-package org.llistaCompra.activity;
-
-import android.app.ListActivity;
-
-public class LlistaCompraProductList extends ListActivity{
-
-}

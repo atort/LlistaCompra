@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.llistaCompra.R;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
@@ -139,7 +140,7 @@ public class PreferencesLlistaCompra extends Activity {
 				}
 
 				// nom fitxer backup
-				SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy_HHmmss");
+				SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault());
 				String currentDateTimeString = sdf.format(new Date());
 				String backupDBPath = currentDateTimeString + "_"
 						+ LlistaCompraHelper.DATABASE_NAME;
@@ -151,12 +152,14 @@ public class PreferencesLlistaCompra extends Activity {
 
 				if (currentDB.exists()) {
 					// fer copia base de dades
-					FileChannel src = new FileInputStream(currentDB)
-							.getChannel();
-					FileChannel dst = new FileOutputStream(backupDB)
-							.getChannel();
+					FileInputStream srcIn = new FileInputStream(currentDB);
+					FileChannel src = srcIn.getChannel();
+					FileOutputStream dstOut = new FileOutputStream(backupDB);
+					FileChannel dst = dstOut.getChannel();
 					dst.transferFrom(src, 0, src.size());
+					srcIn.close();
 					src.close();
+					dstOut.close();
 					dst.close();
 
 					Toast.makeText(this, R.string.backup_ok, Toast.LENGTH_SHORT)
@@ -196,7 +199,6 @@ public class PreferencesLlistaCompra extends Activity {
 				// you can do stuff with the file here too
 				Log.d(this.getClass().getName(), mChosenFile);
 				// restaurar bbdd
-				//FIXME textos multiidioma!
 				new AlertDialog.Builder(currentActivity)
 						.setTitle(R.string.restore_backup_db)
 						.setMessage(
@@ -268,10 +270,14 @@ public class PreferencesLlistaCompra extends Activity {
 
 			if (backupDB.exists()) {
 				// fer copia base de dades
-				FileChannel src = new FileInputStream(backupDB).getChannel();
-				FileChannel dst = new FileOutputStream(currentDB).getChannel();
+				FileInputStream srcIn = new FileInputStream(currentDB);
+				FileChannel src = srcIn.getChannel();
+				FileOutputStream dstOut = new FileOutputStream(backupDB);
+				FileChannel dst = dstOut.getChannel();
 				dst.transferFrom(src, 0, src.size());
+				srcIn.close();
 				src.close();
+				dstOut.close();
 				dst.close();
 
 				Toast.makeText(this, R.string.restore_backup_ok,

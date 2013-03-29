@@ -1,7 +1,0 @@
-package org.llistaCompra.helper;
-
-import android.database.sqlite.SQLiteOpenHelper;
-
-public class llistaCompraHelper extends SQLiteOpenHelper {
-
-}

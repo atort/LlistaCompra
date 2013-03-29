@@ -3,6 +3,7 @@ package org.llistaCompra.adapter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.llistaCompra.helper.LlistaCompraHelper;
 
@@ -68,7 +69,7 @@ public class LlistaCompraDbAdapter {
 	public long createLlista(String nomLlista) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(LLISTA_NOM, nomLlista);
-		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		DateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
 		String s = formatter.format(new Date());
 		initialValues.put(LLISTA_DATA, s);
 		initialValues.put(LLISTA_ESTAT, ESTAT_PREPARACIO);
@@ -151,7 +152,7 @@ public class LlistaCompraDbAdapter {
 	 */
 	public boolean startBuyingLlista(Long rowId) {
 		ContentValues args = new ContentValues();
-		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		DateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
 		String s = formatter.format(new Date());
 		args.put(LLISTA_DATACOMPRA, s);
 		args.put(LLISTA_ESTAT, ESTAT_COMPRANT);
@@ -190,7 +191,7 @@ public class LlistaCompraDbAdapter {
 		//Crear nova llista
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(LLISTA_NOM, nomNovaLLista);
-		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		DateFormat formatter = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
 		String s = formatter.format(new Date());
 		initialValues.put(LLISTA_DATA, s);
 		initialValues.put(LLISTA_ESTAT, ESTAT_PREPARACIO);
@@ -214,9 +215,9 @@ public class LlistaCompraDbAdapter {
 	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_NOM, c.getString(1));
 	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_QUANTITAT, c.getString(2));
 	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA, idNovaLlista);
-	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_COMPRAT, new Integer(0));
+	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_COMPRAT, Integer.valueOf(0));
 	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA_INICIAL, true);
-	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_PREU, new Integer(0));
+	        	initialValuesProd.put(LlistaCompraProducteDbAdapter.PRODUCTE_PREU, Integer.valueOf(0));
 	    		mDb.insert(LlistaCompraProducteDbAdapter.PRODUCTE_TABLE, null, initialValuesProd);
 	    		
 	       	    c.moveToNext();
@@ -244,7 +245,7 @@ public class LlistaCompraDbAdapter {
 			mCursor.moveToFirst();
 			
 			String nomLlista = mCursor.getString(1);
-			builderList.append(nomLlista.toUpperCase() +":" + "\n");
+			builderList.append(nomLlista.toUpperCase(Locale.getDefault()) +"\n");
 		}
 		mCursor.close();
 		
@@ -262,7 +263,7 @@ public class LlistaCompraDbAdapter {
 		    	
 		    	String nomProducte = c.getString(1);
 		    	String quantitatProducte = c.getString(2);
-				builderList.append("- " + nomProducte.toUpperCase() +
+				builderList.append("- " + nomProducte.toUpperCase(Locale.getDefault()) +
 						" (" + quantitatProducte + ") "+
 						"\n");
 		   	    c.moveToNext();
@@ -272,4 +273,5 @@ public class LlistaCompraDbAdapter {
 		
 		return builderList.toString();
 	}
+	
 }
