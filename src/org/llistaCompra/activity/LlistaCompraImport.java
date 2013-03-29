@@ -11,6 +11,8 @@ import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -93,5 +95,19 @@ public class LlistaCompraImport extends Activity {
         }
         	
     }
+    
+    @Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
+	}
 
 }

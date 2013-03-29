@@ -9,6 +9,8 @@ import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -88,29 +90,6 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 		registerForContextMenu(getListView());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onStart()
-	 */
-	@Override
-	protected void onStart() {
-
-		super.onStart();
-
-		Cursor c = llistaCompraDbAdapter.fetchLlista(listRowId);
-		startManagingCursor(c);
-		LlistaCompraFormatHelper.setTitle(
-				this,
-				c.getString(c.getColumnIndex(LlistaCompraDbAdapter.LLISTA_NOM))
-						+ ": "
-						+ getText(R.string.buying_title)
-						+ " "
-						+ llistaCompraProducteDbAdapter.preuAcumulatLlista(
-								listRowId).toString());
-
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -182,7 +161,7 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 			Intent i = new Intent(this, LlistaCompraProductEdit.class);
 			i.putExtra(LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA, listRowId);
 			i.putExtra(LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA_INICIAL,
-					new Integer(0));
+					Integer.valueOf(0));
 			// afegir estat en que esta la compra
 			i.putExtra(LlistaCompraDbAdapter.LLISTA_ESTAT, estatCompra);
 			startActivityForResult(i, ADDPRODUCT_ID);
@@ -257,10 +236,8 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 
 		String[] from = new String[] {
 				LlistaCompraProducteDbAdapter.PRODUCTE_NOM,
-				LlistaCompraProducteDbAdapter.PRODUCTE_QUANTITAT,
 				LlistaCompraProducteDbAdapter.PRODUCTE_COMPRAT };
-		int[] to = new int[] { R.id.text1, 
-				R.id.textQuantitat, R.id.checkBox1 };
+		int[] to = new int[] { R.id.text1, R.id.checkBox1 };
 
 		// Now create an array adapter and set it to display using our row
 		SimpleCursorAdapter llistaCompra = new ProducteCursorAdapter(listRowId,
@@ -309,7 +286,7 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 						// gravar
 						// afegir porducte a bbdd
 						llistaCompraProducteDbAdapter.createProducte(listRowId,
-								nameProduct, new Integer(1), new Integer(1));
+								nameProduct,1,1);
 						// refrescar llistat
 						fillData();
 						addProductVoice();
@@ -318,7 +295,7 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 						// Afegir i Sortir: Afegim i refresquem llistat
 						// afegir porducte a bbdd
 						llistaCompraProducteDbAdapter.createProducte(listRowId,
-								nameProduct, new Integer(1), new Integer(1));
+								nameProduct, 1, 1);
 						// refrescar llistat
 						fillData();
 						break;
@@ -368,6 +345,31 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 	@Override
 	public void onBackPressed() {
 		finish();
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		
+		Cursor c = llistaCompraDbAdapter.fetchLlista(listRowId);
+		startManagingCursor(c);
+		LlistaCompraFormatHelper.setTitle(
+				this,
+				c.getString(c.getColumnIndex(LlistaCompraDbAdapter.LLISTA_NOM))
+						+ ": "
+						+ getText(R.string.buying_title)
+						+ " "
+						+ llistaCompraProducteDbAdapter.preuAcumulatLlista(
+								listRowId).toString());
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
 	}
 
 }

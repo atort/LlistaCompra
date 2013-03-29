@@ -10,37 +10,26 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:paddingLeft="5px"
+        android:paddingLeft="5dp"
         android:src="@drawable/blau" >
     </ImageView>
 
     <TextView
         android:id="@+id/text1"
         style="@+style/TextList"
-        android:layout_toRightOf="@+id/icon" >
+        android:layout_toRightOf="@+id/icon" 
+        android:layout_toLeftOf="@+id/price"
+         android:paddingRight="20dp">
     </TextView>
 
-     <TextView style="@+style/TextList"
-        android:id="@+id/text2" 
-        android:text="(" 
-        android:layout_toRightOf="@+id/text1" />
-     
-    <TextView
-        android:id="@+id/textQuantitat"
-        style="@+style/TextListWithoutSpace" 
-        android:layout_toRightOf="@+id/text2" />
-    
-    <TextView style="@+style/TextListWithoutSpace"
-        android:text=")" 
-        android:layout_toRightOf="@+id/textQuantitat" 
-        android:layout_toLeftOf="@+id/price"/>
+
     
     <TextView
         android:id="@+id/price"
         style="@+style/TextList"
         android:layout_toLeftOf="@+id/result"
         android:gravity="right"
-        android:paddingRight="10px"
+        android:paddingRight="10dp"
         android:textColor="#FF6666" >
     </TextView>
 

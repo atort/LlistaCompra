@@ -4,6 +4,8 @@ import org.llistaCompra.R;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -119,6 +121,20 @@ public class LlistaCompraEdit extends Activity {
 		finish();
 		//Intent i = new Intent(this, LlistaCompraList.class);
 		//startActivity(i);
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
 	}
 
 }

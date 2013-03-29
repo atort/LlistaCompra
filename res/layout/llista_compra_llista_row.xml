@@ -9,12 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:paddingLeft="5px"
+        android:paddingLeft="5dp"
         android:src="@drawable/blau" >
     </ImageView>
 
     <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/text1"
         style="@+style/TextList"
         android:layout_toRightOf="@+id/icon" />

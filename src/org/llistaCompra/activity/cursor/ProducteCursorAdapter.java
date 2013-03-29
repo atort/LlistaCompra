@@ -87,13 +87,12 @@ public class ProducteCursorAdapter extends SimpleCursorAdapter {
 		 * Populate the list
 		 */
 		TextView txt1 = (TextView) v.findViewById(R.id.text1);
-		txt1.setText(this.c.getString(this.c
-				.getColumnIndex(LlistaCompraProducteDbAdapter.PRODUCTE_NOM)));
+		String productName = this.c.getString(this.c
+				.getColumnIndex(LlistaCompraProducteDbAdapter.PRODUCTE_NOM));
+		String quantitat= this.c.getString(this.c
+				.getColumnIndex(LlistaCompraProducteDbAdapter.PRODUCTE_QUANTITAT));
+		txt1.setText(productName + " ("+quantitat+")");
 		
-		TextView quantitat = (TextView) v.findViewById(R.id.textQuantitat);
-		quantitat.setText(this.c.getString(this.c
-				.getColumnIndex(LlistaCompraProducteDbAdapter.PRODUCTE_QUANTITAT)));
-
 		TextView preu = (TextView) v.findViewById(R.id.price);
 		preu.setText(this.c.getString(this.c
 				.getColumnIndex(LlistaCompraProducteDbAdapter.PRODUCTE_PREU)));

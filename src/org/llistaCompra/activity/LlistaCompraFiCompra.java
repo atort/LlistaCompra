@@ -6,6 +6,8 @@ import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -88,10 +90,8 @@ public class LlistaCompraFiCompra extends ListActivity {
 		startManagingCursor(c);
 
 		String[] from = new String[] { 
-				LlistaCompraProducteDbAdapter.PRODUCTE_NOM,
-				LlistaCompraProducteDbAdapter.PRODUCTE_QUANTITAT};
-		int[] to = new int[] { R.id.text1,
-				R.id.textQuantitat};
+				LlistaCompraProducteDbAdapter.PRODUCTE_NOM};
+		int[] to = new int[] { R.id.text1};
 
 		// Now create an array adapter and set it to display using our row
 		SimpleCursorAdapter llistaCompra = new LlistaFiCompraCursorAdapter(
@@ -188,4 +188,17 @@ public class LlistaCompraFiCompra extends ListActivity {
 		finish();
 	}
 
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
+	}
 }

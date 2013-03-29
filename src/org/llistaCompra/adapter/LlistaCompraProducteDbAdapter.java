@@ -114,6 +114,21 @@ public class LlistaCompraProducteDbAdapter {
 				PRODUCTE_PREU, PRODUCTE_QUANTITAT }, PRODUCTE_LLISTA + "=" + idLlista, null, null,
 				null, PRODUCTE_NOM);
 	}
+	
+	/**
+	 * Retorna tots els productes de la llista assignada ordenats per nom
+	 * 
+	 * @param idLlista
+	 *            Identificador de la llista
+	 * @return Tots els productes de la llista
+	 */
+	public Cursor fetchAllProductesFormat(Long idLlista) {
+		return mDb.rawQuery("SELECT *, "+PRODUCTE_NOM+ "|| \" (\" || "+PRODUCTE_QUANTITAT +" || \")\" AS PRODUCTE_QUANTITAT "
+				+" FROM "+PRODUCTE_TABLE
+				+ " WHERE "+ PRODUCTE_LLISTA + "=" + idLlista
+				+ " ORDER BY "+PRODUCTE_NOM , null);
+	}
+	
 
 	/**
 	 * Retorna tots els productes de la llista assignada ordenats per estat de

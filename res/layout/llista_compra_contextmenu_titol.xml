@@ -4,18 +4,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@android:color/transparent"
-    android:gravity="right"
-    >
-
-     <ImageButton
+    android:gravity="right" >
+
+    <ImageButton
         android:id="@+id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
-        android:padding="15px"
+        android:padding="15dp"
         android:src="@drawable/close_button" >
-
     </ImageButton>
 
 </LinearLayout>

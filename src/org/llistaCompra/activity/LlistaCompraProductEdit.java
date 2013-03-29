@@ -5,6 +5,8 @@ import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -152,7 +154,13 @@ public class LlistaCompraProductEdit extends Activity {
 		String productName = mProducteText.getText().toString();
 		String productQuantity = mProducteQuantitatText.getText().toString();
 
-		Integer quantitat = Integer.valueOf(productQuantity);
+		Integer quantitat;
+		if("".equals(productQuantity)){
+			quantitat = 1; //si no hi ha quantitat, posem per defecte 1
+		}
+		else{
+			quantitat = Integer.valueOf(productQuantity);
+		}
 		
 		if (mRowId == null || mRowId.longValue() == 0) {
 			long id = llistaCompraProducteDbAdapter.createProducte(mLlistaId,
@@ -169,5 +177,19 @@ public class LlistaCompraProductEdit extends Activity {
 	@Override
 	public void onBackPressed() {
 		finish();
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
 	}
 }

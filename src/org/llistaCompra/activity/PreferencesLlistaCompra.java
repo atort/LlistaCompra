@@ -14,6 +14,8 @@ import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.helper.LlistaCompraHelper;
 import org.llistaCompra.to.Idioma;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -300,5 +302,19 @@ public class PreferencesLlistaCompra extends Activity {
 					Toast.LENGTH_SHORT).show();
 		}
 
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
 	}
 }

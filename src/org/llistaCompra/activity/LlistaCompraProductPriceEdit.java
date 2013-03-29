@@ -5,6 +5,8 @@ import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -141,7 +143,7 @@ public class LlistaCompraProductPriceEdit extends Activity {
 	private void saveState() {
 		String productPrice = mProductePreuText.getText().toString();
 		try {
-			Double d = new Double(productPrice);
+			Double d = Double.valueOf(productPrice);
 			llistaCompraProducteDbAdapter.updateProductePreuLlista(mLlistaId,
 					mRowId, d);
 		} catch (Exception e) {
@@ -153,5 +155,19 @@ public class LlistaCompraProductPriceEdit extends Activity {
 	public void onBackPressed() {
 		finish();
 
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
 	}
 }

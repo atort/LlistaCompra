@@ -8,6 +8,8 @@ import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
 
+import com.flurry.android.FlurryAgent;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -114,8 +116,7 @@ public class LlistaCompraProductList extends ListActivity {
 				i.putExtra(LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA,
 						listRowId);
 				i.putExtra(
-						LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA_INICIAL,
-						new Integer(1));
+						LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA_INICIAL,1);
 				// Afegir estat en que esta la compra
 				i.putExtra(LlistaCompraDbAdapter.LLISTA_ESTAT, estatCompra);
 				startActivityForResult(i, ADDPRODUCT_ID);
@@ -232,7 +233,7 @@ public class LlistaCompraProductList extends ListActivity {
                     		//Afegir i Continuar: Afegim i tornem a posar per gravar
                     		//afegir porducte a bbdd
                             llistaCompraProducteDbAdapter.createProducte(listRowId,
-                            		nameProduct, new Integer(1), new Integer(1));
+                            		nameProduct, 1, 1);
                           //refrescar llistat
                             fillData();
                             addProductVoice();
@@ -241,7 +242,7 @@ public class LlistaCompraProductList extends ListActivity {
                     		//Afegir i Sortir: Afegim i refresquem llistat
                     		//afegir porducte a bbdd
                             llistaCompraProducteDbAdapter.createProducte(listRowId,
-                            		nameProduct, new Integer(1), new Integer(1));
+                            		nameProduct, 1, 1);
                             //refrescar llistat
                             fillData();
                     		break;
@@ -375,13 +376,12 @@ public class LlistaCompraProductList extends ListActivity {
 
 	private void fillData() {
 		// Get all of the notes from the database and create the item list
-		Cursor c = llistaCompraProducteDbAdapter.fetchAllProductes(listRowId);
+		Cursor c = llistaCompraProducteDbAdapter.fetchAllProductesFormat(listRowId);
 		startManagingCursor(c);
 
 		String[] from = new String[] {
-				LlistaCompraProducteDbAdapter.PRODUCTE_NOM, 
-				LlistaCompraProducteDbAdapter.PRODUCTE_QUANTITAT};
-		int[] to = new int[] { R.id.text1, R.id.textQuantitat };
+				"PRODUCTE_QUANTITAT"};
+		int[] to = new int[] { R.id.text1 };
 
 		// Now create an array adapter and set it to display using our row
 		SimpleCursorAdapter llistaCompra = new SimpleCursorAdapter(this,
@@ -403,6 +403,20 @@ public class LlistaCompraProductList extends ListActivity {
 		// Intent i = new Intent(this, LlistaCompraList.class);
 		// startActivity(i);
 		finish();
+	}
+	
+	@Override
+	protected void onStart()
+	{
+		super.onStart();
+		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+	}
+	 
+	@Override
+	protected void onStop()
+	{
+		super.onStop();		
+		FlurryAgent.onEndSession(this);
 	}
 
 }
