@@ -8,6 +8,7 @@ import org.llistaCompra.activity.cursor.ProducteCursorAdapter;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
+import org.llistaCompra.constants.FlurryEvents;
 
 import com.flurry.android.FlurryAgent;
 
@@ -94,6 +95,9 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case ENDBUY_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.END_LIST);
+			
 			// S'ha de mirar si la compra està en estat comprant
 			if (llistaCompraProducteDbAdapter.productesNoComprats(listRowId)) {
 				// final LlistaCompraRealitzarCompra llistaCompraRealitzarCompra
@@ -157,6 +161,9 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 			}
 			return true;
 		case ADDPRODUCT_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.NEW_PRODUCT_OPENED_LIST);
+			
 			// Afegir producte
 			Intent i = new Intent(this, LlistaCompraProductEdit.class);
 			i.putExtra(LlistaCompraProducteDbAdapter.PRODUCTE_LLISTA, listRowId);
@@ -205,6 +212,9 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 
 			return true;
 		case ADDPRODUCTVOICE_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.NEW_PRODUCT_BY_VOICE_OPENED_LIST);
+			
 			return addProductVoice();
 		}
 		return super.onOptionsItemSelected(item);
@@ -289,6 +299,10 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 								nameProduct,1,1);
 						// refrescar llistat
 						fillData();
+						
+						//FLURRY
+						FlurryAgent.logEvent(FlurryEvents.NEW_PRODUCT_BY_VOICE_OPENED_LIST);
+						
 						addProductVoice();
 						break;
 					case 1:
@@ -333,6 +347,9 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 		Intent i;
 		switch (item.getItemId()) {
 		case EDITPRICE_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.ADD_PRICE_PRODUCT);
+			
 			i = new Intent(this, LlistaCompraProductPriceEdit.class);
 			info = (AdapterContextMenuInfo) item.getMenuInfo();
 			i.putExtra(LlistaCompraDbAdapter.LLISTA_ROWID, info.id);
@@ -352,6 +369,7 @@ public class LlistaCompraRealitzarCompra extends ListActivity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
 		
 		Cursor c = llistaCompraDbAdapter.fetchLlista(listRowId);
 		startManagingCursor(c);

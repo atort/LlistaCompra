@@ -5,6 +5,7 @@ import org.llistaCompra.activity.cursor.LlistaFiCompraCursorAdapter;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
+import org.llistaCompra.constants.FlurryEvents;
 
 import com.flurry.android.FlurryAgent;
 
@@ -104,6 +105,9 @@ public class LlistaCompraFiCompra extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case OPENLIST_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.REOPEN_LIST);
+			
 			final LlistaCompraFiCompra llistaCompraFiCompra = this;
 			new AlertDialog.Builder(this)
 			.setTitle(R.string.openBuy_title)
@@ -135,6 +139,9 @@ public class LlistaCompraFiCompra extends ListActivity {
 					}).show();
 			break;
 		case TRANSFERLIST_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.NEW_LIST_FROM_TRANSFER);
+			
 			Intent i = new Intent(this, LlistaCompraTransfer.class);
 			i.putExtra(LlistaCompraDbAdapter.LLISTA_ROWID, listRowId);
 			i.putExtra(LlistaCompraDbAdapter.LLISTA_NOM, nomLlista);
@@ -193,6 +200,7 @@ public class LlistaCompraFiCompra extends ListActivity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
 	}
 	 
 	@Override

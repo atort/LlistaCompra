@@ -162,6 +162,7 @@ public class LlistaCompraProductPriceEdit extends Activity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
 	}
 	 
 	@Override

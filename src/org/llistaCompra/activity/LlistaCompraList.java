@@ -9,6 +9,7 @@ import org.llistaCompra.R;
 import org.llistaCompra.activity.cursor.LlistaCursorAdapter;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
+import org.llistaCompra.constants.FlurryEvents;
 import org.llistaCompra.provider.FileProvider;
 
 import com.flurry.android.FlurryAgent;
@@ -145,6 +146,9 @@ public class LlistaCompraList extends ListActivity {
 		Intent i;
 		switch (item.getItemId()) {
 		case DELETELIST_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.DELETE_LIST);
+			
 			info = (AdapterContextMenuInfo) item.getMenuInfo();
 			final long idList = info.id;
 
@@ -198,6 +202,9 @@ public class LlistaCompraList extends ListActivity {
 			return true;
 			
 		case SHARELIST_ID: //compartir lista (via gmail, whatsapp, etc)
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.SHARE_LIST);
+			
 			i = new Intent(this, LlistaCompraEdit.class);
 			info = (AdapterContextMenuInfo) item.getMenuInfo();
 			//obtener lista en formato texto
@@ -211,6 +218,9 @@ public class LlistaCompraList extends ListActivity {
 	}
 
 	private void createList() {
+		//FLURRY
+		FlurryAgent.logEvent(FlurryEvents.NEW_LIST);
+		
 		Intent i = new Intent(this, LlistaCompraEdit.class);
 		startActivityForResult(i, CREATELIST_ID);
 	}
@@ -261,6 +271,7 @@ public class LlistaCompraList extends ListActivity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
 	}
 	 
 	@Override

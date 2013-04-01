@@ -1,7 +1,11 @@
 package org.llistaCompra.activity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.llistaCompra.R;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
+import org.llistaCompra.constants.FlurryEvents;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -74,12 +78,18 @@ public class MainTab extends TabActivity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
+		
+		Map<String, String> appParams = new HashMap<String, String>();
+		appParams.put("Locale",LlistaCompraFormatHelper.getLanguageToLoad(this));
+		FlurryAgent.logEvent(FlurryEvents.START_APP,appParams);
 	}
 	 
 	@Override
 	protected void onStop()
 	{
-		super.onStop();		
+		super.onStop();
+		FlurryAgent.logEvent(FlurryEvents.STOP_APP);
 		FlurryAgent.onEndSession(this);
 	}
 

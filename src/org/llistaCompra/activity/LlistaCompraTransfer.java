@@ -128,6 +128,7 @@ public class LlistaCompraTransfer extends Activity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
 	}
 	 
 	@Override

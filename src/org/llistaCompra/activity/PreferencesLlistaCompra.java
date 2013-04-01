@@ -7,10 +7,13 @@ import java.io.FilenameFilter;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.llistaCompra.R;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
+import org.llistaCompra.constants.FlurryEvents;
 import org.llistaCompra.helper.LlistaCompraHelper;
 import org.llistaCompra.to.Idioma;
 
@@ -80,6 +83,13 @@ public class PreferencesLlistaCompra extends Activity {
 							.getItemAtPosition(pos);
 					LlistaCompraFormatHelper.setLanguageToLoad(
 							preferencesActivity, selectedIdioma.getCode());
+					
+					//FLURRY
+					Map<String, String> appParams = new HashMap<String, String>();
+					appParams.put("NewLocale",selectedIdioma.getCode());
+					FlurryAgent.logEvent(FlurryEvents.EDIT_LOCALE,appParams);
+					//FLURRY
+					
 					// tornar a la llista, refrescar llista
 					MainTab parentActivity = (MainTab) preferencesActivity
 							.getParent();
@@ -128,6 +138,7 @@ public class PreferencesLlistaCompra extends Activity {
 	 * LlistaCompra/22052012_102325_DbLlistaCompra.db
 	 */
 	private void exportBackupDB() {
+		FlurryAgent.onEvent(FlurryEvents.EXPORT_BACKUP);
 		try {
 			// obtenir la ubicació de la sd
 			File sd = Environment.getExternalStorageDirectory();
@@ -184,7 +195,9 @@ public class PreferencesLlistaCompra extends Activity {
 	 * Obrir dialog per escollir backup a restaurar
 	 */
 	private void restoreBackupDB() {
-
+		
+		FlurryAgent.onEvent(FlurryEvents.RESTORE_BACKUP);
+		
 		loadFileList();
 
 		AlertDialog.Builder builder = new Builder(this);
@@ -309,6 +322,8 @@ public class PreferencesLlistaCompra extends Activity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
+		FlurryAgent.onEvent(FlurryEvents.PREFERENCES);
 	}
 	 
 	@Override

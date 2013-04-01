@@ -10,6 +10,7 @@ import org.llistaCompra.R;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
+import org.llistaCompra.constants.FlurryEvents;
 
 import com.flurry.android.FlurryAgent;
 
@@ -101,6 +102,10 @@ public class LlistaCompraImport extends Activity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
+		
+		//FLURRY
+		FlurryAgent.logEvent(FlurryEvents.IMPORT_LIST);
 	}
 	 
 	@Override

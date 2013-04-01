@@ -7,6 +7,7 @@ import org.llistaCompra.R;
 import org.llistaCompra.activity.helper.LlistaCompraFormatHelper;
 import org.llistaCompra.adapter.LlistaCompraDbAdapter;
 import org.llistaCompra.adapter.LlistaCompraProducteDbAdapter;
+import org.llistaCompra.constants.FlurryEvents;
 
 import com.flurry.android.FlurryAgent;
 
@@ -99,6 +100,9 @@ public class LlistaCompraProductList extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case ADDPRODUCT_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.NEW_PRODUCT);
+			
 			// Afegir producte
 			// S'ha de mirar si la compra est� en preparacio
 			if (LlistaCompraDbAdapter.ESTAT_PREPARACIO != estatCompra) {
@@ -124,8 +128,14 @@ public class LlistaCompraProductList extends ListActivity {
 
 			return true;
 		case BEGINBUY_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.SHOPPING_LIST);
+			
 			return beginBuy();
 		case ADDPRODUCTVOICE_ID:
+			//FLURRY
+			FlurryAgent.logEvent(FlurryEvents.NEW_PRODUCT_BY_VOICE);
+			
 			return addProductVoice();
 
 		}
@@ -139,6 +149,7 @@ public class LlistaCompraProductList extends ListActivity {
 	 * @return Retorna true si tot correcte, cap excepci�.
 	 */
 	private boolean beginBuy() {
+				
 		// S'ha de mirar si la compra est� en preparacio
 		if (LlistaCompraDbAdapter.ESTAT_PREPARACIO != estatCompra) {
 			new AlertDialog.Builder(this)
@@ -236,6 +247,10 @@ public class LlistaCompraProductList extends ListActivity {
                             		nameProduct, 1, 1);
                           //refrescar llistat
                             fillData();
+                            
+                            //FLURRY
+                			FlurryAgent.logEvent(FlurryEvents.NEW_PRODUCT_BY_VOICE);
+                			
                             addProductVoice();
                     		break;
                     	case 1:
@@ -410,6 +425,7 @@ public class LlistaCompraProductList extends ListActivity {
 	{
 		super.onStart();
 		FlurryAgent.onStartSession(this, "PGW794DFBZKRBC9XBVGF");
+		FlurryAgent.onPageView();
 	}
 	 
 	@Override
